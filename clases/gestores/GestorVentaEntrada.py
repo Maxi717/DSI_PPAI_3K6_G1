@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from ..fronteras import PantallaVentaEntrada
  
 pantalla = PantallaVentaEntrada()
@@ -11,28 +10,28 @@ class GestorVentaEntrada:
         self.usuario = usuario
 
 
-    def opcion_venta_entradas(self):
-        self.logueadoEmpleado = self.buscar_empleado_logueado()
+    def opcion_venta_entradas(self, sesion):
+        self.logueadoEmpleado = self.buscar_empleado_logueado(sesion)
         sede = self.buscar_sede(self.logueadoEmpleado)
         vector_tarifas = self.buscar_tarifas_sede(sede)
 
         pantalla.mostrar_tarifas(vector_tarifas)
 
-    def buscar_empleado_logueado(self):
-        empleado_logueado = Sesion.get_empleado_en_sesion()
+    def buscar_empleado_logueado(self, sesion):
+        empleado_logueado = sesion.get_empleado_en_sesion()
         return empleado_logueado
 
     def buscar_sede(self, empleado_logueado):
-        sede = Empleado.obtener_sede(empleado_logueado)
+        sede = empleado_logueado.obtener_sede()
         return sede
 
     def buscar_tarifas_sede(self, sede):
-        vector_tarifas = Sede.obtener_tarifas_vigentes(sede)
+        vector_tarifas = sede.obtener_tarifas_vigentes(sede)
         return vector_tarifas
 
     def tomar_tarifas_seleccionadas(self, tarifa):
         self.tarifas = tarifa
-        duracion_exposiciones_vigentes = self.buscar_expociciones_vigentes()
+        duracion_exposiciones_vigentes = self.buscar_exposiciones_vigentes()
         return duracion_exposiciones_vigentes
 
         pantalla.seleccionar_cantidad_entradas()
