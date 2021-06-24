@@ -3,5 +3,5 @@ class TipoEntrada:
         self.nombre = nombre
 
 
-def mostrar_nombre(self):
-    return self.nombre
+    def mostrar_nombre(self):
+        return self.nombre

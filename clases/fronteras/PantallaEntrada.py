@@ -17,5 +17,5 @@ class PantallaEntrada():
         self.current_act_label.configure(text=cant_actual_visitantes)
         self.pantalla.mainloop()
 
-def visitantes(cant_maxima_visitantes, cant_actual_visitantes):
-    return cant_maxima_visitantes, cant_actual_visitantes
+    def visitantes(self,cant_maxima_visitantes, cant_actual_visitantes):
+        return cant_maxima_visitantes, cant_actual_visitantes
