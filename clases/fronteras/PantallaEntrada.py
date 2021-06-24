@@ -1,6 +1,4 @@
 import tkinter
-import mysql.connector
-from mysql.connector import Error
 
 class PantallaEntrada():
     def act_cant_visitantes(self, cant_max, cant_actual):
@@ -19,5 +17,5 @@ class PantallaEntrada():
         self.current_act_label.configure(text=cant_actual_visitantes)
         self.pantalla.mainloop()
 
-def actualizarVisitantes():
-   pass
+def visitantes(cant_maxima_visitantes, cant_actual_visitantes):
+    return cant_maxima_visitantes, cant_actual_visitantes
