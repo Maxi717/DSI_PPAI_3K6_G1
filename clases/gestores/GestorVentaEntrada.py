@@ -5,6 +5,7 @@ pantalla = PantallaVentaEntrada()
 
 class GestorVentaEntrada:
     def __init__(self, logeado_empleado, tarifas, usuario):
+
         self.logueadoEmpleado = logeado_empleado
         self.tarifas = tarifas
         self.usuario = usuario
@@ -88,3 +89,4 @@ class GestorVentaEntrada:
 
 gestor = GestorVentaEntrada()
 gestor.opcion_venta_entradas()
+
