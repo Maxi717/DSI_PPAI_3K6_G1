@@ -4,9 +4,8 @@ from ..fronteras import PantallaVentaEntrada
 pantalla = PantallaVentaEntrada()
 
 class GestorVentaEntrada:
-    def __init__(self, logeado_empleado, tarifas, usuario):
-
-        self.logueadoEmpleado = logeado_empleado
+    def __init__(self, tarifas, usuario):
+        self.empleado_logueado = None
         self.tarifas = tarifas
         self.usuario = usuario
 
@@ -20,14 +19,14 @@ class GestorVentaEntrada:
 
     def buscar_empleado_logueado(self, sesion):
         empleado_logueado = sesion.get_empleado_en_sesion()
-        return empleado_logueado
+        self.empleado_logueado = empleado_logueado
 
     def buscar_sede(self, empleado_logueado):
         sede = empleado_logueado.obtener_sede()
         return sede
 
-    def buscar_tarifas_sede(self, sede):
-        vector_tarifas = sede.obtener_tarifas_vigentes(sede)
+    def buscar_tarifas_sede(self):
+        vector_tarifas = self.empleado_logueado.sede_donde_trabaja.obtener_tarifas_vigentes()
         return vector_tarifas
 
     def tomar_tarifas_seleccionadas(self, tarifa):
@@ -37,15 +36,14 @@ class GestorVentaEntrada:
 
         pantalla.seleccionar_cantidad_entradas()
 
-    def buscar_exposiciones_vigentes(self, tarifa):
-        duracion_exposiciones_vigentes = Sede.calcular_duracion_exposiciones_vigentes(tarifa)
+    def buscar_exposiciones_vigentes(self):
+        duracion_exposiciones_vigentes = self.empleado_logueado.sede_donde_trabaja.calcular_duracion_exposiciones_vigentes()
         return duracion_exposiciones_vigentes
-
 
     def cantidad_entradas_a_emitir(self, cantidad_entradras):
         cap_maxima = self.buscar_capacidad_sede()
         fecha_hora = self.obtener_fecha_hora_actual()
-        cant_visitantes_en_sede = Entrada.buscar_visitantes_en_sede(fecha_hora)
+        cant_visitantes_en_sede = self.empleado_logueado.sede_donde_trabaja.buscar_visitantes_en_sede(fecha_hora)
         cant_visitantes_por_asistir = ReservaVisita.buscar_reservas_para_asistir(fecha_hora)
 
         resultado = self.validar_limite_visitantes(cap_maxima, cant_visitantes_en_sede, cant_visitantes_por_asistir, cantidad_entradras)
@@ -53,8 +51,8 @@ class GestorVentaEntrada:
             lista_total_venta = self.calcular_total_venta(cantidad_entradras)
             pantalla.mostrar_detalle_entrada(lista_total_venta, cantidad_entradras, self.tarifas)
 
-    def buscar_capacidad_sede(self):
-        capacidad_maxima = Sede.mostrar_cantidad_maxima_visitantes()
+    def buscar_capacidad_sede(self, sede):
+        capacidad_maxima = sede.mostrar_cantidad_maxima_visitantes()
         return capacidad_maxima
 
     def obtener_fecha_hora_actual(self):

@@ -1,5 +1,5 @@
-from Tarifa import *
-from Exposicion import *
+from clases.entidades.Tarifa import *
+from clases.entidades.Exposicion import *
 
 class Sede:
     def __init__(self, exposiciones=[],tarifas=[], cant_maxima_visitantes=-1, cant_max_por_guia=-1, nombre=""):
@@ -12,7 +12,7 @@ class Sede:
     def get_cantidad_maxima_visitntes(self):
         return self.cant_maxima_visitantes
 
-    def obtenerTarifasVigentes(self):
+    def obtener_tarifas_vigentes(self):
         tarifas_vigentes =[]
         for tarifa in self.tarifas:
             if tarifa.mostrar_montos_vigentes() != []:
